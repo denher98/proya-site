@@ -16,38 +16,30 @@ function useReveal(threshold = 0.35) {
   return { ref, show };
 }
 
-/* ---------- Header (mobile-first) ---------- */
 function Header() {
   const linkBase =
     "text-[#f19d47] visited:text-[#f19d47] hover:text-[#e98a2f] focus:text-[#e98a2f] active:text-[#e98a2f] " +
     "no-underline decoration-transparent transition-colors duration-300 focus:outline-none";
 
   return (
-    <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-[#f19d47]/30">
-      {/* Stack on mobile, row on md+ */}
-      <div className="w-screen h-16 md:h-20 px-4 sm:px-6 md:px-12 xl:px-24 flex flex-col md:flex-row items-center md:items-center md:justify-between">
-        {/* Logo */}
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#f19d47]/30">
+      <div className="w-screen px-12 xl:px-24 h-20 flex items-center">
         <a href="/" className="shrink-0">
-          <img src={asset.logo} alt="PROYA 로고" className="h-8 md:h-10 w-auto object-contain" />
+          <img src={asset.logo} alt="PROYA 로고" className="h-10 w-auto object-contain" />
         </a>
-
-        {/* Nav: centered on desktop, centered & stacked spacing on mobile */}
-        <nav className="mt-2 md:mt-0 md:absolute md:left-1/2 md:-translate-x-1/2">
-          <ul className="flex flex-wrap justify-center gap-6 md:gap-12 text-sm sm:text-base md:text-lg font-semibold tracking-wide">
+        <nav className="absolute left-1/2 -translate-x-1/2">
+          <ul className="flex items-center gap-12 text-lg font-semibold tracking-wide">
             <li><a href="#home" className={linkBase}>홈</a></li>
             <li><a href="#about" className={linkBase}>소개</a></li>
             <li><a href="#contact" className={linkBase}>문의</a></li>
           </ul>
         </nav>
-
-        {/* spacer to balance desktop; hidden width on mobile */}
-        <div className="ml-auto w-0 md:w-10" />
+        <div className="ml-auto w-10" />
       </div>
     </header>
   );
 }
 
-/* ---------- Carousel (responsive height/controls/caption) ---------- */
 function CarouselFull() {
   const slides = [
     { img: "/img1.jpg", titleKo: "PROYA 5X 비타민C 스킨케어 세트", desc: "피부 톤을 균일하게 밝혀주고, 탄력과 생기를 채워주는 비타민C 케어 세트. 한 세트로 완성하는 투명하고 건강한 광채 피부" },
@@ -60,10 +52,10 @@ function CarouselFull() {
 
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [animate, setAnimate] = useState(false);
-  const AUTOPLAY_MS = 5500;
-  const ENTER_DELAY_MS = 180;
-  const REARM_DELAY_MS = 60;
+  const [animate, setAnimate] = useState(false);         
+  const AUTOPLAY_MS = 5500;                               
+  const ENTER_DELAY_MS = 180;                              
+  const REARM_DELAY_MS = 60;                               
 
   useEffect(() => {
     const t = setTimeout(() => setAnimate(true), ENTER_DELAY_MS);
@@ -88,15 +80,15 @@ function CarouselFull() {
   }, [index, slides.length]);
 
   const reanimateTo = (next) => {
-    setAnimate(false);
+    setAnimate(false);                     
     setTimeout(() => {
-      setIndex(next);
-      setTimeout(() => setAnimate(true), REARM_DELAY_MS);
+      setIndex(next);                       
+      setTimeout(() => setAnimate(true), REARM_DELAY_MS); 
     }, REARM_DELAY_MS);
   };
 
   return (
-    <section id="home" className="relative h-[70vh] sm:h-[80vh] md:h-screen w-screen overflow-hidden">
+    <section id="home" className="relative h-screen w-screen overflow-hidden">
       <div
         className="h-full w-full"
         onMouseEnter={() => setPaused(true)}
@@ -111,19 +103,16 @@ function CarouselFull() {
               style={{ transform: `translateX(${offset * 100}%)` }}
             >
               <img src={s.img} alt={s.titleKo} className="h-full w-full object-cover" />
-              {/* subtle readability overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/15 pointer-events-none" />
             </div>
           );
         })}
       </div>
-
-      {/* Captions (scaled per breakpoint) */}
-      <div className="absolute left-4 sm:left-6 md:left-10 bottom-8 sm:bottom-10 md:bottom-14 max-w-[92vw] sm:max-w-[85vw] md:max-w-2xl">
+      <div className="absolute left-6 md:left-10 bottom-10 md:bottom-14 max-w-[90vw] md:max-w-2xl">
         <h3
           key={slides[index].titleKo}
           className={
-            "text-xl sm:text-2xl md:text-4xl font-bold tracking-tight text-black " +
+            "text-2xl md:text-4xl font-bold tracking-tight text-black " +
             "transition-all duration-[1100ms] ease-out " +
             (animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10")
           }
@@ -133,7 +122,7 @@ function CarouselFull() {
         <p
           key={slides[index].desc}
           className={
-            "mt-2 text-xs sm:text-sm md:text-xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] break-words " +
+            "mt-2 text-sm md:text-xl text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)] " +
             "transition-all duration-[1000ms] ease-out delay-200 " +
             (animate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6")
           }
@@ -141,35 +130,26 @@ function CarouselFull() {
           {slides[index].desc}
         </p>
       </div>
-
-      {/* Controls (bigger on mobile) */}
       <button
         aria-label="이전"
         onClick={() => reanimateTo((index - 1 + slides.length) % slides.length)}
-        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 grid place-items-center rounded-full
-                   bg-white/80 hover:bg-[#f19d47]/90 hover:text-white text-[#f19d47] shadow-lg
-                   w-10 h-10 sm:w-12 sm:h-12 text-xl sm:text-2xl"
+        className="absolute left-6 top-1/2 -translate-y-1/2 grid place-items-center rounded-full bg-white/80 hover:bg-[#f19d47]/90 hover:text-white text-[#f19d47] shadow-lg size-12 text-2xl"
       >
         ‹
       </button>
       <button
         aria-label="다음"
         onClick={() => reanimateTo((index + 1) % slides.length)}
-        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 grid place-items-center rounded-full
-                   bg-white/80 hover:bg-[#f19d47]/90 hover:text-white text-[#f19d47] shadow-lg
-                   w-10 h-10 sm:w-12 sm:h-12 text-xl sm:text-2xl"
+        className="absolute right-6 top-1/2 -translate-y-1/2 grid place-items-center rounded-full bg-white/80 hover:bg-[#f19d47]/90 hover:text-white text-[#f19d47] shadow-lg size-12 text-2xl"
       >
         ›
       </button>
-
-      {/* Dots (closer on mobile) */}
-      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => reanimateTo(i)}
-            className={`rounded-full transition ${i === index ? "bg-[#f19d47]" : "bg-white/70 hover:bg-[#f19d47]/60"}`}
-            style={{ width: 10, height: 10 }}
+            className={`h-3 w-3 rounded-full transition ${i === index ? "bg-[#f19d47]" : "bg-white/70 hover:bg-[#f19d47]/60"}`}
             aria-label={`${i + 1}번 슬라이드로 이동`}
           />
         ))}
@@ -178,17 +158,16 @@ function CarouselFull() {
   );
 }
 
-/* ---------- Sections (responsive spacing/type) ---------- */
 function BestSellerReveal() {
   const { ref, show } = useReveal(0.3);
   return (
-    <section ref={ref} className="py-16 sm:py-20 md:py-28 bg-white">
-      <div className="w-screen px-4 sm:px-6 md:px-12 xl:px-24 text-center">
-        <h2 className={`text-3xl sm:text-4xl md:text-[clamp(40px,5vw,70px)] font-bold tracking-tight text-[#f19d47] transform transition-all duration-700 ease-out
+    <section ref={ref} className="py-28 bg-white">
+      <div className="w-screen px-12 xl:px-24 text-center">
+        <h2 className={`text-[clamp(40px,5vw,70px)] font-bold tracking-tight text-[#f19d47] transform transition-all duration-700 ease-out
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
           베스트셀러
         </h2>
-        <p className={`mt-3 sm:mt-4 md:mt-6 text-slate-600 text-base sm:text-lg transform transition-all duration-700 ease-out delay-150
+        <p className={`mt-6 text-4xl text-slate-600 transform transition-all duration-700 ease-out delay-150
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           지금 가장 사랑받는 PROYA의 대표 제품을 만나보세요.
         </p>
@@ -200,13 +179,13 @@ function BestSellerReveal() {
 function AboutReveal() {
   const { ref, show } = useReveal(0.25);
   return (
-    <section id="about" ref={ref} className="py-16 sm:py-20 md:py-24 bg-[#fff7f2]">
-      <div className="w-screen px-4 sm:px-6 md:px-12 xl:px-24 text-center md:text-left">
-        <h3 className={`text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 md:mb-4 text-[#f19d47] transform transition-all duration-700 ease-out
+    <section id="about" ref={ref} className="py-24 bg-[#fff7f2]">
+      <div className="w-screen px-12 xl:px-24 text-center md:text-left">
+        <h3 className={`text-3xl font-semibold mb-4 text-[#f19d47] transform transition-all duration-700 ease-out
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           PROYA 소개
         </h3>
-        <p className={`text-[#f19d47]/90 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl md:max-w-4xl transform transition-all duration-700 ease-out delay-150
+        <p className={`text-[#f19d47]/90 text-lg leading-relaxed max-w-4xl transform transition-all duration-700 ease-out delay-150
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           PROYA는 5X 비타민 C 포뮬러로 피부 본연의 투명함과 생기를 되찾아주는 스킨케어 브랜드입니다.
           매일의 루틴 속에서 자연스럽게 빛나는 피부를 선사합니다.
@@ -219,13 +198,13 @@ function AboutReveal() {
 function ContactReveal() {
   const { ref, show } = useReveal(0.25);
   return (
-    <section id="contact" ref={ref} className="py-16 sm:py-20 md:py-24 bg-[#f19d47]/5">
-      <div className="w-screen px-4 sm:px-6 md:px-12 xl:px-24 text-center md:text-left">
-        <h3 className={`text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 md:mb-4 text-[#f19d47] transform transition-all duration-700 ease-out
+    <section id="contact" ref={ref} className="py-24 bg-[#f19d47]/5">
+      <div className="w-screen px-12 xl:px-24 text-center md:text-left">
+        <h3 className={`text-3xl font-semibold mb-4 text-[#f19d47] transform transition-all duration-700 ease-out
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           문의하기
         </h3>
-        <p className={`text-[#f19d47]/90 text-base sm:text-lg md:text-xl transform transition-all duration-700 ease-out delay-150
+        <p className={`text-[#f19d47]/90 text-lg transform transition-all duration-700 ease-out delay-150
           ${show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           인스타그램: proya_kr
         </p>
@@ -234,27 +213,25 @@ function ContactReveal() {
   );
 }
 
-/* ---------- Split images (stack on mobile) ---------- */
 function SplitTwoImages() {
   return (
     <section className="bg-white p-0 m-0">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-none">
         {/* Left side */}
-        <div className="relative h-[40vh] sm:h-[50vh] md:h-[70vh]">
+        <div className="relative h-[70vh] w-full">
           <img
             src="/left.jpg"
             alt="왼쪽 이미지"
             className="absolute inset-0 w-full h-full object-cover block"
-            loading="lazy"
           />
         </div>
+
         {/* Right side */}
-        <div className="relative h-[40vh] sm:h-[50vh] md:h-[70vh]">
+        <div className="relative h-[70vh] w-full">
           <img
             src="/right.jpg"
             alt="오른쪽 이미지"
             className="absolute inset-0 w-full h-full object-cover block"
-            loading="lazy"
           />
         </div>
       </div>
@@ -262,8 +239,9 @@ function SplitTwoImages() {
   );
 }
 
+
 export default function App(){
-  useLayoutEffect(() => {
+   useLayoutEffect(() => {
     try {
       if ("scrollRestoration" in window.history) {
         window.history.scrollRestoration = "manual";
@@ -276,29 +254,28 @@ export default function App(){
       }
     };
     window.addEventListener("pageshow", onPageShow);
-    const onBeforeUnload = () => window.scrollTo(0, 0);
+     const onBeforeUnload = () => window.scrollTo(0, 0);
     window.addEventListener("beforeunload", onBeforeUnload);
-    return () => {
+        return () => {
       window.removeEventListener("pageshow", onPageShow);
       window.removeEventListener("beforeunload", onBeforeUnload);
     };
   }, []);
 
-  return (
-    <div className="min-h-screen bg-white text-[#f19d47] font-sans">
-      <Header/>
-      <main>
-        <CarouselFull/>
-        <BestSellerReveal/>
-        <SplitTwoImages/>
-        <AboutReveal/>
-        <ContactReveal/>
-      </main>
-      <footer className="border-t border-[#f19d47]/30 py-8 sm:py-10 bg-white text-center">
-        <p className="text-xs sm:text-sm text-[#f19d47]/80">
+  return (<div className="min-h-screen bg-white text-[#f19d47] font-sans">
+    <Header/>
+    <main>
+    <CarouselFull/>
+    <BestSellerReveal/>
+    <SplitTwoImages/>
+    <AboutReveal/>
+    <ContactReveal/>
+    </main>
+    <footer className="border-t border-[#f19d47]/30 py-10 bg-white text-center">
+        <p className="text-sm text-[#f19d47]/80">
           © {new Date().getFullYear()} PROYA. 모든 권리 보유.
         </p>
       </footer>
-    </div>
-  )
+  </div>)
 }
+
